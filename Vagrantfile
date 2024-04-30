@@ -11,20 +11,19 @@ Vagrant.configure("2") do |config|
     dev.vm.box = "file://C:/Users/admin/Downloads/box/CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box"
     dev.vm.hostname = "dev-server"
     dev.vm.network "public_network", type: "dhcp", :bridge => 'Realtek 8812BU Wireless LAN 802.11ac USB NIC'
+    dev.vm.synced_folder ".vagrant", "~/.vagrant", disabled: true
     dev.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
       vb.cpus = "2"
     end
     # 자동 프로비저닝 설정
-    # dev.vm.provision "shell", path: "provision_dev.sh"
-    # dev.vm.provision "shell",
-    #   run: "always",
-    #   inline: "route add default gw 192.168.0.1"
+    dev.vm.provision "shell", path: "default.sh"
+    dev.vm.provision "shell", path: "provision_dev.sh"
   end
 
   # 마스터 서버 정의
   config.vm.define "db-master" do |master|
-    master.vm.box = "generic/rocky9"
+    master.vm.box = "file://C:/Users/admin/Downloads/box/CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box"
     master.vm.hostname = "db-master"
     master.vm.network "public_network", type: "dhcp", :bridge => 'Realtek 8812BU Wireless LAN 802.11ac USB NIC'
     master.vm.provider "virtualbox" do |vb|
@@ -32,27 +31,21 @@ Vagrant.configure("2") do |config|
       vb.cpus = "2"
     end
     # 마스터 서버용 스크립트 실행
-    master.vm.provision "shell", path: "provision_db_master.sh"
+    master.vm.provision "shell", path: "default.sh"
     master.vm.provision "shell", run: "always", inline: "echo \"10.0.0.0/16 via 192.168.0.7\" > sudo tee /etc/sysconfig/network-scripts/route-eth1"
   end
 
   # 슬레이브 서버 정의
   config.vm.define "db-slave" do |slave|
-    slave.vm.box = "generic/rocky9"
+    slave.vm.box = "file://C:/Users/admin/Downloads/box/CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box"
     slave.vm.hostname = "db-slave"
     slave.vm.network "public_network", type: "dhcp", :bridge => 'Realtek 8812BU Wireless LAN 802.11ac USB NIC'
-
-
     slave.vm.provider "virtualbox" do |vb|
     vb.memory = "2048"
       vb.cpus = "2"
     end 
-
     # 슬레이브 서버용 스크립트 실행
-    slave.vm.provision "shell", path: "provision_db_slave.sh"
-    # slave.vm.provision "shell",
-    #   run: "always",
-    #   inline: "sudo echo "10.0.0.0/16 via 192.168.0.7" > /etc/sysconfig/network-scripts/route-eth1"
+    slave.vm.provision "shell", path: "default.sh"
   end
   # 쿠버네티스 컨트롤러
   config.vm.define "k8s-C1" do |k8sC1|
@@ -65,9 +58,6 @@ Vagrant.configure("2") do |config|
     end
     # 자동 프로비저닝 설정
     k8sC1.vm.provision "shell", path: "default.sh"
-    # dev.vm.provision "shell",
-    #   run: "always",
-    #   inline: "route add default gw 192.168.0.1"
   end
 
   config.vm.define "k8s-C2" do |k8sC2|
@@ -80,9 +70,6 @@ Vagrant.configure("2") do |config|
     end
     # 자동 프로비저닝 설정
     k8sC2.vm.provision "shell", path: "default.sh"
-    # dev.vm.provision "shell",
-    #   run: "always",
-    #   inline: "route add default gw 192.168.0.1"
   end
   
   config.vm.define "k8s-W" do |k8sW|
@@ -95,9 +82,6 @@ Vagrant.configure("2") do |config|
     end
     # 자동 프로비저닝 설정
     k8sW.vm.provision "shell", path: "default.sh"
-    # dev.vm.provision "shell",
-    #   run: "always",
-    #   inline: "route add default gw 192.168.0.1"
   end
 
   config.vm.define "haproxy1" do |ha1|
@@ -110,9 +94,6 @@ Vagrant.configure("2") do |config|
     end
     # 자동 프로비저닝 설정
     ha1.vm.provision "shell", path: "default.sh"
-    # dev.vm.provision "shell",
-    #   run: "always",
-    #   inline: "route add default gw 192.168.0.1"
   end
 
   config.vm.define "haproxy2" do |ha2|

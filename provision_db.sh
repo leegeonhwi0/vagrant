@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sudo yum update
 # MySQL 설치
 sudo dnf install mysql-server -y
 sudo systemctl start mysqld

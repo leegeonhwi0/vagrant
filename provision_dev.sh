@@ -1,8 +1,9 @@
 #!/bin/bash
 
+sudo yum install epel -y
 # # Docker CE 설치를 위한 prerequisites 설치
 # sudo dnf install -y dnf-plugins-core
-
+sudo yum update
 # # Docker 저장소 추가
 # sudo dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
 
@@ -30,7 +31,7 @@
 # sudo systemctl status nginx
 
 # # Ansible 설치
-# sudo dnf install -y ansible
+sudo yum install -y ansible
 
 # # Ansible 버전 확인
-# ansible --version
+ansible --version
