@@ -1,1 +1,1 @@
-{"name":"file://C:/Users/admin/Downloads/box/CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box","version":"0","provider":"virtualbox","directory":"boxes/file-VAGRANTCOLON--VAGRANTSLASH--VAGRANTSLASH-C-VAGRANTCOLON--VAGRANTSLASH-Users-VAGRANTSLASH-admin-VAGRANTSLASH-Downloads-VAGRANTSLASH-box-VAGRANTSLASH-CentOS-7-x86_64-Vagrant-2004_01.VirtualBox.box/0/virtualbox"}
+{"name":"generic/rocky9","version":"4.3.12","provider":"virtualbox","directory":"boxes/generic-VAGRANTSLASH-rocky9/4.3.12/amd64/virtualbox"}
